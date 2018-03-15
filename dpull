@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker pull $(cat dockerfile | grep FROM | awk '{print $2}')
