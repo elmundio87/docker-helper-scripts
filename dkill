@@ -1,3 +1,25 @@
 #!/bin/bash
 
-docker kill $(docker ps | sed -n 2p | awk '{ print $1 }')
+index=1
+
+container_list=`docker ps --format '{{.Names}}\t{{.ID}}'`
+count=`echo -e "$container_list" | wc -l`
+
+if [ "$container_list" == '' ];then
+    echo "No running containers found."
+    exit 1
+fi
+
+if [ $count -gt 1 ];then
+    x=0
+    echo Which container?
+    while read -r line; do
+        x=$((x+1))
+        container_name=$(echo "$line" | awk '{ print $1 }')
+        echo "[$x] $container_name"
+    done <<< "$container_list"
+    read index
+fi
+
+container=$(echo "$container_list" | sed -n "$index p" | awk '{ print $1 }' )
+docker kill $container
