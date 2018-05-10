@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi $(docker images -q)
+
+if [[ `git status --porcelain` ]]; then
+	git clean -fdx
+fi
