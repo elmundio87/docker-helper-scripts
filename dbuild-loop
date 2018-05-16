@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-while true; do dbuild; sleep 2; done
