@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-docker build . --pull | tee build.log
-docker run -p 8080:80 $(cat build.log | grep -o '\w\+' | tail -n1)
